@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 
@@ -40,7 +40,7 @@ async function run() {
     const profileCollection = client.db('profileDB').collection('profile');
 
 
-    app.get('/pro', async (req, res) => {
+    app.get('/profile', async (req, res) => {
       const cursor = profileCollection.find();
       const result = await cursor.toArray();
       res.send(result);
@@ -51,12 +51,40 @@ async function run() {
 
     // sending data to db
     app.post('/profile', async (req, res) => {
-      const newProduct = req.body;
-      console.log(newProduct);
-      const result = await profileCollection.insertOne(newProduct);
+      const newProfile = req.body;
+      console.log(newProfile);
+      const result = await profileCollection.insertOne(newProfile);
       res.send(result);
     })
 
+
+    app.put('/profile/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) }
+      const options = { upsert: true };
+      const updatedItem = req.body;
+
+      const profile = {
+        $set: {
+
+ 
+           fname : updatedItem.fname,
+           lname : updatedItem.lname,
+           email : updatedItem.email,
+           country : updatedItem.country,
+           address : updatedItem.address,
+           company : updatedItem.city,
+           age : updatedItem.region,
+           phone : updatedItem.code,
+          
+          
+        }
+      }
+
+      const result = await profileCollection.updateOne(filter, profile, options);
+      console.log(result);
+      res.send(result);
+    })
 
 
     // pagination

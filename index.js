@@ -67,7 +67,7 @@ app.get("/updateItem/:id",async(req,res)=>{
     console.log("update",result)
     res.send(result)
 })
-    app.patch('/profile/:id', async (req, res) => {
+    app.put('/profile/:id', async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) }
       const options = { upsert: true };
@@ -90,7 +90,7 @@ app.get("/updateItem/:id",async(req,res)=>{
         }
       }
 
-      const result = await profileCollection.updateOne(filter, profile, options);
+      const result = await profileCollection.updateOne(filter, profile,options);
       console.log(result);
       res.send(result);
     })

@@ -57,8 +57,17 @@ async function run() {
       res.send(result);
     })
 
+// update
 
-    app.put('/profile/:id', async (req, res) => {
+app.get("/updateItem/:id",async(req,res)=>{
+    const id=req.params.id;
+    console.log(id)
+    const query={_id:new ObjectId(id)}
+    const result=await profileCollection.findOne(query);
+    console.log("update",result)
+    res.send(result)
+})
+    app.patch('/profile/:id', async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) }
       const options = { upsert: true };
@@ -113,7 +122,7 @@ app.get('/itemsCount', async (req, res) => {
     }
 
   }
-}
+
 run().catch(console.dir);
 
 

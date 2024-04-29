@@ -82,9 +82,9 @@ app.get("/updateItem/:id",async(req,res)=>{
            email : updatedItem.email,
            country : updatedItem.country,
            address : updatedItem.address,
-           company : updatedItem.city,
-           age : updatedItem.region,
-           phone : updatedItem.code,
+           company : updatedItem.company,
+           age : updatedItem.age,
+           phone : updatedItem.phone,
           
           
         }
